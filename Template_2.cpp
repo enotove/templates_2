@@ -11,6 +11,8 @@ private:
 	T** arr;
 	
 	size_t size;
+	size_t row;
+	size_t cols;
 	
 public:
 	ArrayHard(int a, int b)
@@ -20,11 +22,13 @@ public:
 		{
 			arr[i] = new T[b];
 		}
+		row = a;
+		cols = b;
 		size = a * b;
 	}
 	~ArrayHard()
 	{
-		for (int i = 0; i < (sizeof(arr) / sizeof(arr[0])); i++)
+		for (int i = 0; i < row; i++)
 		{
 			delete[] arr[i];
 		}
@@ -49,13 +53,13 @@ public:
 
 };
 template<class T>
-void print_arr(T& arr)
+void print_arr(T& arr, unsigned rows_, unsigned cols_)
 {
 	std::cout << "Table: " << std::endl;
-	for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	for (int i = 0; i < rows_; i++)
 	{
 		std::cout << "Row " << i << ": ";
-		for (int j = 0; j < sizeof(arr[0]) / sizeof(arr[0][0]); j++)
+		for (int j = 0; j < cols_; j++)
 		{
 			std::cout << arr[i][j] << " ";
 		}
@@ -64,18 +68,22 @@ void print_arr(T& arr)
 }
 int main()
 {
-	auto table = ArrayHard <int>(2, 2);
+	
+		int a = 2;
+		int b = 2;
+		auto table = ArrayHard <int>(a, b);
 
 
-	for (int i = 0; i < sizeof(table) / sizeof(table[0]); i++)
-	{
-		for (int j = 0; j < sizeof(table[0]) / sizeof(table[0][0]); j++)
+		for (int i = 0; i < a; i++)
 		{
-			table[i][j] = i + j;
+			for (int j = 0; j < b; j++)
+			{
+				table[i][j] = i + j;
+			}
 		}
-	}
-	print_arr(table);
-	table[1][1] = 15;
-	print_arr(table);
+		print_arr(table, a, b);
+		table[1][1] = 15;
+		print_arr(table, a, b);
+	
 	
 }
